@@ -1,18 +1,21 @@
-# 单纯线程前缀的匹配，unity游戏
+Simple thread prefix matching for Unity games
+
 [[comm_match]]
 packages = [
-    "com.miHoYo.Yuanshen",
-    "com.miHoYo.GenshinImpact",
-    "com.miHoYo.ys.bilibili",
-    "com.miHoYo.yuanshencb",
-    "com.miHoYo.hkrpg",
-    "com.miHoYo.hkrpg.bilibili",
-    "com.HoYoverse.hkrpgoversea",
-    "com.miHoYo.hkrpgcb",
-    "com.tencent.tmgp.sgame",
-    "com.miHoYo.Nap",
-    "com.yongshi.tenojo.ys",
-    "com.tencent.KiHan",
+  "com.HoYoverse.hkrpgoversea",
+  "com.hypergryph.arknights",
+  "com.miHoYo.Nap",
+  "com.miHoYo.Yuanshen",
+  "com.miHoYo.GenshinImpact",
+  "com.miHoYo.hkrpg",
+  "com.miHoYo.hkrpg.bilibili",
+  "com.miHoYo.hkrpgcb",
+  "com.miHoYo.ys.bilibili",
+  "com.miHoYo.yuanshencb",
+  "com.mobile.legends",
+  "com.tencent.KiHan",
+  "com.tencent.tmgp.sgame",
+  "com.yongshi.tenojo.ys",
 ]
 [comm_match.policy]
 top = []
@@ -23,7 +26,8 @@ mono = []
 background = []
 core_closer = false
 
-# 单纯线程前缀的匹配，ue游戏
+Simple thread prefix matching for UE games
+
 [[comm_match]]
 packages = ["com.kurogame.mingchao"]
 [comm_match.policy]
@@ -35,7 +39,8 @@ mono = []
 background = []
 core_closer = false
 
-# 单纯线程前缀的匹配，光遇
+Simple thread prefix matching for Sky: Children of the Light
+
 [[comm_match]]
 packages = ["com.netease.sky", "com.bilibili.fatego"]
 [comm_match.policy]
@@ -47,7 +52,8 @@ mono = ["JobThread", "Job.Worker"]
 background = []
 core_closer = true
 
-# 对于三国杀和时空猎人，cocos游戏，取一个负载最高的GLThread丢cpu7
+Assign the highest-load GLThread to CPU7 for Cocos games like Three Kingdoms Kill and Time Hunter
+
 [[usage_top1]]
 packages = ["com.bf.sgs.hdexp", "com.yinhan.hunter.tx"]
 max_comm = ["GLThread"]
@@ -61,7 +67,8 @@ mono = []
 background = []
 core_closer = false
 
-# 拉力竞速3
+Rush Rally 3 optimization
+
 [[usage_top1]]
 packages = ["brownmonster.app.game.rushrally3"]
 max_comm = ["Thread-"]
@@ -75,7 +82,8 @@ mono = []
 background = []
 core_closer = false
 
-# 对于需要取一个负载最大的线程，其线程前缀名为"Thread-"
+Optimize CPU7 binding for high-load threads in PUBG, etc.
+
 [[usage_top1]]
 packages = ["com.tencent.lzhx", "com.tencent.tmgp.pubgmhd"]
 max_comm = ["Thread-"]
@@ -89,7 +97,8 @@ mono = []
 background = []
 core_closer = false
 
-# 无限暖暖，取一个负载最重的GameThread绑cpu7
+Infinity Nikki: Bind the heaviest GameThread to CPU7
+
 [[usage_top1]]
 packages = ["com.papegames.infinitynikki"]
 max_comm = ["GameThread"]
@@ -103,7 +112,8 @@ mono = []
 background = []
 core_closer = false
 
-# 需要单独把负载最重的unitymain绑定到cpu7
+Bind UnityMain to CPU7 for COD and CF
+
 [[usage_top1]]
 packages = ["com.tencent.tmgp.cod", "com.tencent.tmgp.cf"]
 max_comm = ["UnityMain"]
@@ -117,12 +127,13 @@ mono = []
 background = ["Thread-"]
 core_closer = false
 
-# 需要把负载第二重的线程绑定cpu6
+Bind the second-highest load thread to CPU6 for specific games
+
 [[usage_top1]]
 packages = [
-    "com.tencent.lolm",
-    "com.tencent.tmgp.speedmobile",
-    "com.gameabc.sgspad",
+  "com.gameabc.sgspad",
+  "com.tencent.lolm",
+  "com.tencent.tmgp.speedmobile",
 ]
 max_comm = ["Thread-"]
 max_comm_core = "Dualo"
@@ -135,7 +146,8 @@ mono = []
 background = ["Thread-"]
 core_closer = false
 
-# cod战区
+Warzone-specific optimizations
+
 [[usage_top1]]
 packages = ["com.activision.callofduty.warzone"]
 max_comm = ["Thread-"]
@@ -149,41 +161,34 @@ mono = []
 background = ["Thread-"]
 core_closer = false
 
-# 对于需要取两个重负载线程的游戏，
-# 其线程前缀名均为"Thread-"，目前策略是燕云十六声特调
-# 若不需要检索第二个高负载线程，second_comm不写即可
+Special tuning for high-load thread pairs (Yanyun Sixteen Sounds)
+
 [[usage_top2]]
-packages = [
-    "com.netease.yyslscn",
-    "com.netease.dwrg",
-    "com.netease.dwrg.mi",
-    "com.netease.idv.googleplay",
-]
+packages = ["com.netease.yyslscn"]
 max_comm = ["Thread-"]
 
-# 对于需要取两个重负载线程的游戏，
-# 其线程前缀名分别为"Thread-"，"MainThread"，目前策略是蛋仔派对特调
+Special tuning for high-load thread pairs (Eggy Party)
+
 [[usage_top2]]
 packages = ["com.netease.party"]
 max_comm = ["MainThread"]
 second_comm = ["Thread-"]
 
-# 对于需要取两个重负载线程的游戏
-# 其线程前缀名分别为"UnityMain","Thread-"
+Special tuning for high-load thread pairs (Sausage Man, Chess games, etc.)
+
 [[usage_top2]]
 packages = [
-    "com.galasports.operablebasketball.mi",
-    "com.sofunny.Sausage",
-    "com.tencent.jkchess",
-    "com.hypergryph.arknights",
-    "com.tencent.tmgp.WePop",
+  "com.galasports.operablebasketball.mi",
+  "com.sofunny.Sausage",
+  "com.tencent.jkchess",
 ]
 max_comm = ["UnityMain"]
 second_comm = ["Thread-"]
 
-# 对于需要取两个重负载线程的游戏，
-# 其线程前缀名分别为"GameThread","RenderThread"，目前策略只有三角洲
+Special tuning for high-load thread pairs (Delta Force Mobile)
+
 [[usage_top2]]
 packages = ["com.tencent.tmgp.dfm"]
 max_comm = ["GameThread"]
 second_comm = ["RenderThread"]
+
